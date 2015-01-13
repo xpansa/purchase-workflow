@@ -9,7 +9,6 @@
 
         <xpath expr="//field[@name='user_id']/..">
           <group>
-	    <field name="pricelist_id"/>
             <field name="currency_id" string="Comparison Currency"/>
             <field name="date_exchange_rate"/>
           </group>

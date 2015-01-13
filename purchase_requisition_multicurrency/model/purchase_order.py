@@ -29,14 +29,14 @@ class PurchaseOrderLine(models.Model):
                  'price_subtotal',
                  'order_id.currency_id',
                  'order_id.requisition_id.date_exchange_rate',
-                 'order_id.requisition_id.pricelist_id.currency_id')
+                 'order_id.requisition_id.currency_id')
     def _compute_prices_in_company_currency(self):
         """ """
         requisition = self.order_id.requisition_id
-        if requisition and requisition.pricelist_id.currency_id:
+        if requisition and requisition.currency_id:
             date = requisition.date_exchange_rate or fields.Date.today()
             from_curr = self.order_id.currency_id.with_context(date=date)
-            to_curr = requisition.pricelist_id.currency_id
+            to_curr = requisition.currency_id
             self.price_unit_co = from_curr.compute(self.price_unit,
                                                    to_curr, round=False)
             self.price_subtotal_co = from_curr.compute(self.price_subtotal,

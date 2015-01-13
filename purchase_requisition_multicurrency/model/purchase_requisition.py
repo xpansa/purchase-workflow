@@ -28,13 +28,6 @@ class PurchaseRequisition(models.Model):
         'Exchange rate reference date',
         help="Defines Exchange rate date of Unit price and subtotal "
              "If not set, takes todays exchange rate.")
-    pricelist_id = fields.Many2one(
-        'product.pricelist',
-        'Pricelist',
-        required=True,
-        help="Pricelist that represent the currency for current logistic "
-             "request.")
     currency_id = fields.Many2one(
-        related='pricelist_id.currency_id',
-        comodel_name='res.currency',
-        string='Currency')
+        'res.currency',
+        'Comparison Currency')
