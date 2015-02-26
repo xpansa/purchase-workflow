@@ -33,14 +33,16 @@ class PurchaseOrderLine(models.Model):
     def _compute_prices_in_company_currency(self):
         """ """
         requisition = self.order_id.requisition_id
+        date = requisition.date_exchange_rate or fields.Date.today()
+        from_curr = self.order_id.currency_id.with_context(date=date)
         if requisition and requisition.currency_id:
-            date = requisition.date_exchange_rate or fields.Date.today()
-            from_curr = self.order_id.currency_id.with_context(date=date)
             to_curr = requisition.currency_id
-            self.price_unit_co = from_curr.compute(self.price_unit,
+        else:
+            to_curr = self.order_id.company_id.currency_id
+        self.price_unit_co = from_curr.compute(self.price_unit,
+                                               to_curr, round=False)
+        self.price_subtotal_co = from_curr.compute(self.price_subtotal,
                                                    to_curr, round=False)
-            self.price_subtotal_co = from_curr.compute(self.price_subtotal,
-                                                       to_curr, round=False)
 
     price_unit_co = fields.Float(
         compute='_compute_prices_in_company_currency',
