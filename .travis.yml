@@ -1,3 +1,12 @@
+sudo: false
+cache: pip
+
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml # because pip installation is slow
+
 language: python
 
 python:
@@ -5,16 +14,16 @@ python:
 
 env:
   - VERSION="8.0" LINT_CHECK="1"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="purchase_delivery_address" LINT_CHECK="0"
-  - VERSION="8.0" ODOO_REPO="OCA/OCB" INCLUDE="purchase_delivery_address" LINT_CHECK="0"
   - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="framework_agreement" LINT_CHECK="0"
   - VERSION="8.0" ODOO_REPO="OCA/OCB" INCLUDE="framework_agreement" LINT_CHECK="0"
   - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="purchase_rfq_bid_workflow" LINT_CHECK="0"
   - VERSION="8.0" ODOO_REPO="OCA/OCB" INCLUDE="purchase_rfq_bid_workflow" LINT_CHECK="0"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="purchase_requisition_bid_selection,purchase_requisition_auto_rfq,purchase_requisition_auto_rfq_bid_selection" LINT_CHECK="0"
-  - VERSION="8.0" ODOO_REPO="OCA/OCB" INCLUDE="purchase_requisition_bid_selection,purchase_requisition_auto_rfq,purchase_requisition_auto_rfq_bid_selection" LINT_CHECK="0"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" EXCLUDE="purchase_delivery_address,framework_agreement,purchase_rfq_bid_workflow,purchase_requisition_bid_selection,purchase_requisition_auto_rfq,purchase_requisition_auto_rfq_bid_selection" LINT_CHECK="0"
-  - VERSION="8.0" ODOO_REPO="OCA/OCB" EXCLUDE="purchase_delivery_address,framework_agreement,purchase_rfq_bid_workflow,purchase_requisition_bid_selection,purchase_requisition_auto_rfq,purchase_requisition_auto_rfq_bid_selection" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="purchase_requisition_auto_rfq" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="OCA/OCB" INCLUDE="purchase_requisition_auto_rfq" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="purchase_requisition_multicurrency,purchase_rfq_bid_workflow,purchase_requisition_bid_selection,purchase_requisition_auto_rfq_bid_selection" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="OCA/OCB" INCLUDE="purchase_requisition_multicurrency,purchase_rfq_bid_workflow,purchase_requisition_bid_selection,purchase_requisition_auto_rfq_bid_selection" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" EXCLUDE="purchase_requisition_delivery_address,purchase_delivery_address,purchase_origin_address,framework_agreement,purchase_rfq_bid_workflow,purchase_requisition_bid_selection,purchase_requisition_auto_rfq,purchase_requisition_auto_rfq_bid_selection,purchase_requisition_multicurrency" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="OCA/OCB" EXCLUDE="purchase_requisition_delivery_address,purchase_delivery_address,purchase_origin_address,framework_agreement,purchase_rfq_bid_workflow,purchase_requisition_bid_selection,purchase_requisition_auto_rfq,purchase_requisition_auto_rfq_bid_selection,purchase_requisition_multicurrency" LINT_CHECK="0"
 
 virtualenv:
   system_site_packages: true
@@ -23,7 +32,6 @@ install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
-  - git clone https://github.com/OCA/server-tools -b ${VERSION} $HOME/server-tools
 
 script:
   - travis_run_tests

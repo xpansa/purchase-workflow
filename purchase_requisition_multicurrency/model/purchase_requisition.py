@@ -19,6 +19,7 @@
 #
 #
 from openerp import models, fields
+from openerp.tools import SUPERUSER_ID
 
 
 class PurchaseRequisition(models.Model):
