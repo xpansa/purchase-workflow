@@ -18,12 +18,57 @@
         </field>
         <field name="price_unit" position="after">
           <field name="price_unit_co"/>
+          <field name="requisition_currency" string="Currency"/>
         </field>
         <field name="price_subtotal" position="attributes">
           <attribute name="invisible">1</attribute>
         </field>
         <field name="price_subtotal" position="after">
           <field name="price_subtotal_co"/>
+        </field>
+      </field>
+    </record>
+
+    <record id="view_purchase_order_form" model="ir.ui.view">
+      <field name="name">purchase.order.form</field>
+      <field name="model">purchase.order</field>
+      <field name="priority" eval="8"/>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
+        <field name="price_unit" position="after">
+          <field name="order_currency" required="0" string="CURR"/>
+          <field name="price_unit_co" string="U/P in LC"/>
+        </field>
+        <field name="price_subtotal" position="after">
+          <field name="price_subtotal_co" string="TOT in LC"/>
+        </field>
+      </field>
+    </record>
+
+    <record id="view_purchase_order_tree" model="ir.ui.view">
+      <field name="name">purchase.order.tree</field>
+      <field name="model">purchase.order</field>
+      <field name="priority" eval="8"/>
+      <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+      <field name="arch" type="xml">
+        <field name="origin" position="after">
+          <field name="currency_id"/>
+        </field>
+      </field>
+    </record>
+
+    <record id="view_purchase_order_line_tree" model="ir.ui.view">
+      <field name="name">purchase.order.line.tree</field>
+      <field name="model">purchase.order.line</field>
+      <field name="priority" eval="8"/>
+      <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+      <field name="arch" type="xml">
+        <field name="price_unit" position="after">
+          <field name="order_currency"/>
+          <field name="price_unit_co" string="Unit Price in LC"/>
+        </field>
+        <field name="price_subtotal" position="replace">
+          <field name="price_subtotal_co" string="Subtotal in LC"/>
         </field>
       </field>
     </record>

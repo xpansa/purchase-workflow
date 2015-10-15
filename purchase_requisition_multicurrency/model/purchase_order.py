@@ -45,6 +45,13 @@ class PurchaseOrderLine(models.Model):
         self.price_subtotal_co = from_curr.compute(self.price_subtotal,
                                                    to_curr, round=False)
 
+    @api.multi
+    def _requisition_currency(self):
+        for rec in self:
+            requisition = rec.order_id.requisition_id
+            if requisition:
+                rec.requisition_currency = requisition.currency_id
+
     price_unit_co = fields.Float(
         compute='_compute_prices_in_company_currency',
         string="Unit Price",
@@ -52,6 +59,7 @@ class PurchaseOrderLine(models.Model):
         store=True,
         help="Unit Price in company currency."
         )
+
     price_subtotal_co = fields.Float(
         compute='_compute_prices_in_company_currency',
         string="Subtotal",
@@ -59,3 +67,10 @@ class PurchaseOrderLine(models.Model):
         store=True,
         help="Subtotal in company currency."
     )
+
+    order_currency = fields.Many2one(string="Currency", readonly=True,
+                                     related="order_id.currency_id")
+
+    requisition_currency = fields.Many2one(
+        "res.currency", string="Requisition Currency", readonly=True,
+        compute="_requisition_currency")
