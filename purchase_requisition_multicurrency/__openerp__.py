@@ -31,6 +31,10 @@
  "data": ["view/purchase_order.xml",
           "view/purchase_requisition.xml",
           ],
+ "css": [
+    "static/src/css/product_customization.css"
+ ],
+     
  "auto_install": False,
  "test": [],
  "installable": True,

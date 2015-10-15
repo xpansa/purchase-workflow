@@ -1,0 +1,21 @@
+@charset "utf-8";			
+.openerp .ui-menu {
+  padding: 2px 0;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 4px;
+  border: 1px solid #afafb6;
+  width:auto !important;
+
+}
+/*@charset "utf-8";			*/
+.openerp .oe_form_sheet_width {
+  min-width: 650px;
+  max-width: 1260px;
+  margin: 0 auto;
+} 
+table .oe_list_content th.oe_list_header_many2one[data-id="product_id"]
+{
+  width: 400px;
+}
