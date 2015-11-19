@@ -28,7 +28,7 @@ class PurchaseOrderLine(models.Model):
     @api.one
     @api.depends('price_unit',
                  'price_subtotal',
-                 'order_id.pricelist_id.currency_id',
+                 'order_id.currency_id',
                  'order_id.requisition_id.date_exchange_rate',
                  'order_id.requisition_id.currency_id')
     def _compute_prices_in_company_currency(self):
@@ -52,25 +52,7 @@ class PurchaseOrderLine(models.Model):
             if requisition:
                 rec.requisition_currency = requisition.currency_id
 
-    price_unit_co = fields.Float(
-        compute='_compute_prices_in_company_currency',
-        string="Unit Price",
-        digits=dp.get_precision('Account'),
-        store=True,
-        help="Unit Price in company currency."
-        )
-
-    price_subtotal_co = fields.Float(
-        compute='_compute_prices_in_company_currency',
-        string="Subtotal",
-        digits=dp.get_precision('Account'),
-        store=True,
-        help="Subtotal in company currency."
-    )
-
-    order_currency = fields.Many2one(string="Currency", readonly=True,
-                                     related="order_id.currency_id")
-
-    requisition_currency = fields.Many2one(
-        "res.currency", string="Requisition Currency", readonly=True,
-        compute="_requisition_currency")
+    price_unit_co = fields.Float(compute='_compute_prices_in_company_currency', string="Unit Price", digits=dp.get_precision('Account'), store=True, help="Unit Price in company currency.")
+    price_subtotal_co = fields.Float(compute='_compute_prices_in_company_currency', string="Subtotal", digits=dp.get_precision('Account'), store=True, help="Subtotal in company currency.")
+    order_currency = fields.Many2one(string="Currency", readonly=True, related="order_id.currency_id")
+    requisition_currency = fields.Many2one("res.currency", string="Requisition Currency", readonly=True, compute="_requisition_currency")

@@ -32,7 +32,7 @@
           "view/purchase_requisition.xml",
           ],
  "css": [
-    "static/src/css/product_customization.css"
+    #"static/src/css/product_customization.css"#TODO NEED TO CHECK
  ],
      
  "auto_install": False,

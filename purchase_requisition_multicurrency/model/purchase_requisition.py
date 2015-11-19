@@ -19,16 +19,10 @@
 #
 #
 from openerp import models, fields
-from openerp.tools import SUPERUSER_ID
 
 
 class PurchaseRequisition(models.Model):
     _inherit = 'purchase.requisition'
 
-    date_exchange_rate = fields.Date(
-        'Exchange rate reference date',
-        help="Defines Exchange rate date of Unit price and subtotal "
-             "If not set, takes todays exchange rate.")
-    currency_id = fields.Many2one(
-        'res.currency',
-        'Comparison Currency')
+    date_exchange_rate = fields.Date('Exchange rate reference date', help="Defines Exchange rate date of Unit price and subtotal If not set, takes todays exchange rate.")
+    currency_id = fields.Many2one('res.currency', 'Comparison Currency')

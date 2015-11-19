@@ -1,105 +1,109 @@
 <?xml version="1.0"?>
 <openerp>
-  <data>
-    <template id="assets_backend" name="purchase requisition assets" inherit_id="purchase_requisition.assets_backend">
-      <xpath expr="." position="inside">
-        <script type="text/javascript" src="/purchase_requisition_multicurrency/static/src/js/web_addons.js"></script>
-	<link rel="stylesheet" href="/purchase_requisition_multicurrency/static/src/css/product_customization.css"/>
-      </xpath>
-    </template>
+	<data>
+		<template id="assets_backend" name="purchase requisition assets"
+			inherit_id="purchase_requisition.assets_backend">
+			<xpath expr="." position="inside">
+				<script type="text/javascript"
+					src="/purchase_requisition_multicurrency/static/src/js/web_addons.js"></script>
+				<link rel="stylesheet"
+					href="/purchase_requisition_multicurrency/static/src/css/product_customization.css" />
+			</xpath>
+		</template>
 
-    <record id="purchase_order_line_tree_tender" model="ir.ui.view">
-      <field name="name">purchase.order.line.tree.tender</field>
-      <field name="model">purchase.order.line</field>
-      <field eval="1" name="priority"/>
-      <field name="inherit_id" ref="purchase_requisition.purchase_order_line_tree_tender"/>
-      <field name="arch" type="xml">
-        <field name="price_unit" position="attributes">
-          <attribute name="invisible">1</attribute>
-        </field>
-        <field name="price_unit" position="after">
-          <field name="price_unit_co"/>
-          <field name="requisition_currency" string="Currency"/>
-        </field>
-        <field name="price_subtotal" position="attributes">
-          <attribute name="invisible">1</attribute>
-        </field>
-        <field name="price_subtotal" position="after">
-          <field name="price_subtotal_co"/>
-        </field>
-      </field>
-    </record>
+		<record id="purchase_order_line_tree_tender" model="ir.ui.view">
+			<field name="name">purchase.order.line.tree.tender</field>
+			<field name="model">purchase.order.line</field>
+			<field eval="1" name="priority" />
+			<field name="inherit_id"
+				ref="purchase_requisition.purchase_order_line_tree_tender" />
+			<field name="arch" type="xml">
+				<field name="price_unit" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+				<field name="price_unit" position="after">
+					<field name="price_unit_co" />
+					<field name="requisition_currency" string="Currency" />
+				</field>
+				<field name="price_subtotal" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+				<field name="price_subtotal" position="after">
+					<field name="price_subtotal_co" />
+				</field>
+			</field>
+		</record>
 
-    <record id="view_purchase_order_form" model="ir.ui.view">
-      <field name="name">purchase.order.form</field>
-      <field name="model">purchase.order</field>
-      <field name="priority" eval="8"/>
-      <field name="inherit_id" ref="purchase.purchase_order_form"/>
-      <field name="arch" type="xml">
-        <!-- Make name invisible as it takes much place -->
-        <xpath expr="//field[@name='order_line']/tree/field[@name='name']"
-          position="attributes">
-          <attribute name="invisible">1</attribute>
-        </xpath>
-        <!-- Common abbreviations -->
-        <field name="price_unit" position="after">
-          <field name="order_currency" required="0" string="CURR"/>
-          <field name="price_unit_co" string="U/P in LC"/>
-        </field>
-        <field name="price_subtotal" position="after">
-          <field name="price_subtotal_co" string="TOT in LC"/>
-        </field>
-        <field name="product_qty" position="replace">
-          <field name="product_qty" string="Qty"/>
-        </field>
-        <field name="product_uom" position="replace">
-          <field name="product_uom" string="UoM"/>
-        </field>
-        <field name="price_unit" position="replace">
-          <field name="price_unit" string="P/U"/>
-        </field>
-        <field name="taxes_id" position="replace">
-          <field name="taxes_id" string="Tx"/>
-        </field>
-        <field name="price_subtotal" position="replace">
-          <field name="price_subtotal" string="sTOT"/>
-        </field>
+		<record id="view_purchase_order_form" model="ir.ui.view">
+			<field name="name">purchase.order.form</field>
+			<field name="model">purchase.order</field>
+			<field name="priority" eval="8" />
+			<field name="inherit_id" ref="purchase.purchase_order_form" />
+			<field name="arch" type="xml">
+				<!-- Make name invisible as it takes much place -->
+				<xpath expr="//field[@name='order_line']/tree/field[@name='name']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<!-- Common abbreviations -->
+				<field name="price_unit" position="after">
+					<field name="order_currency" required="0" string="CURR" />
+					<field name="price_unit_co" string="U/P in LC" />
+				</field>
+				<field name="price_subtotal" position="after">
+					<field name="price_subtotal_co" string="TOT in LC" />
+				</field>
+				<field name="product_qty" position="replace">
+					<field name="product_qty" string="Qty" />
+				</field>
+				<field name="product_uom" position="replace">
+					<field name="product_uom" string="UoM" />
+				</field>
+				<field name="price_unit" position="replace">
+					<field name="price_unit" string="P/U" />
+				</field>
+				<field name="taxes_id" position="replace">
+					<field name="taxes_id" string="Tx" />
+				</field>
+				<field name="price_subtotal" position="replace">
+					<field name="price_subtotal" string="sTOT" />
+				</field>
 
-      </field>
-    </record>
+			</field>
+		</record>
 
-    <record id="view_purchase_order_tree" model="ir.ui.view">
-      <field name="name">purchase.order.tree</field>
-      <field name="model">purchase.order</field>
-      <field name="priority" eval="8"/>
-      <field name="inherit_id" ref="purchase.purchase_order_tree"/>
-      <field name="arch" type="xml">
-        <field name="origin" position="after">
-          <field name="currency_id"/>
-        </field>
-      </field>
-    </record>
+		<record id="view_purchase_order_tree" model="ir.ui.view">
+			<field name="name">purchase.order.tree</field>
+			<field name="model">purchase.order</field>
+			<field name="priority" eval="8" />
+			<field name="inherit_id" ref="purchase.purchase_order_tree" />
+			<field name="arch" type="xml">
+				<field name="origin" position="after">
+					<field name="currency_id" />
+				</field>
+			</field>
+		</record>
 
-    <record id="view_purchase_order_line_tree" model="ir.ui.view">
-      <field name="name">purchase.order.line.tree</field>
-      <field name="model">purchase.order.line</field>
-      <field name="priority" eval="8"/>
-      <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
-      <field name="arch" type="xml">
-        <field name="price_unit" position="after">
-          <field name="order_currency"/>
-          <field name="price_unit_co" string="Unit Price in LC"/>
-        </field>
-        <field name="price_subtotal" position="replace">
-          <field name="price_subtotal_co" string="Subtotal in LC"/>
-        </field>
-      </field>
-    </record>
+		<record id="view_purchase_order_line_tree" model="ir.ui.view">
+			<field name="name">purchase.order.line.tree</field>
+			<field name="model">purchase.order.line</field>
+			<field name="priority" eval="8" />
+			<field name="inherit_id" ref="purchase.purchase_order_line_tree" />
+			<field name="arch" type="xml">
+				<field name="price_unit" position="after">
+					<field name="order_currency" />
+					<field name="price_unit_co" string="Unit Price in LC" />
+				</field>
+				<field name="price_subtotal" position="replace">
+					<field name="price_subtotal_co" string="Subtotal in LC" />
+				</field>
+			</field>
+		</record>
 
-    <record id="purchase_requisition.purchase_line_tree" model="ir.actions.act_window">
-      <field name="view_id" ref="purchase_order_line_tree_tender"/>
-      <field name="search_view_id" ref="purchase.purchase_order_line_search"/>
-    </record>
+		<record id="purchase_requisition.purchase_line_tree" model="ir.actions.act_window">
+			<field name="view_id" ref="purchase_order_line_tree_tender" />
+			<field name="search_view_id" ref="purchase.purchase_order_line_search" />
+		</record>
 
-  </data>
+	</data>
 </openerp>
